@@ -22,13 +22,14 @@ fun CurrentPlayingComponent(
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = playingItem.title,
-            fontSize = 18.sp,
+            fontSize = 20.sp,
             maxLines = 2,
             textAlign = TextAlign.Center
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = playingItem.artist,
+            fontSize = 14.sp,
             maxLines = 2,
             textAlign = TextAlign.Center
         )
