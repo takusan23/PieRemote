@@ -49,7 +49,7 @@ fun HomeScreen() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "権限を付与していない場合はこちらから付与してください。")
+            Text(text = "権限を付与していない場合はこちらから付与してください。クイック設定パネルから有効・無効が切り替えできます。")
             Button(onClick = {
                 val intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
                 context.startActivity(intent)

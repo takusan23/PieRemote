@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PieRemote</string>
+    <string name="quick_setting_on_label">PieRemote On</string>
+    <string name="quick_setting_off_label">PieRemote Off</string>
 </resources>
