@@ -4,8 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,13 +16,10 @@ import androidx.wear.compose.foundation.lazy.AutoCenteringParams
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.items
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
-import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.CircularProgressIndicator
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
-import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
@@ -30,6 +27,7 @@ import io.github.takusan23.pieremote.ui.component.QueueListItem
 import io.github.takusan23.pieremotecommon.DataSyncTool
 import io.github.takusan23.pieremotecommon.WearMessageTool
 import io.github.takusan23.pieremotecommon.data.MusicControlEvent
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @Composable
@@ -38,6 +36,13 @@ fun QueueScreen() {
     val scope = rememberCoroutineScope()
     val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
     val pieRemoteData = DataSyncTool.receivePieRemoteData(context).collectAsStateWithLifecycle(initialValue = null)
+
+    LaunchedEffect(key1 = Unit) {
+        // リストをスクロールする
+        val data = DataSyncTool.receivePieRemoteData(context).first()
+        val scrollIndex = data.itemQueue.indexOfFirst { it.title == data.currentPlayingMusicItem.title }
+        listState.scrollToItem(scrollIndex, 0)
+    }
 
     Scaffold(
         vignette = { Vignette(vignettePosition = VignettePosition.TopAndBottom) },
